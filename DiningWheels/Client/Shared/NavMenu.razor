@@ -1,39 +1,55 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">DiningWheels</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+﻿<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <i class="bi bi-bicycle me-2"></i>
+            <span>Dining Wheels</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">Home</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/restaurants">Find Restaurant</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/order">Order Online</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/contact">Contact</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/about">About Us</NavLink>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="oi oi-person me-1"></i> Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        @if (isLogged)
+                        {
+                            <li><NavLink class="dropdown-item" href="/profile">Profile</NavLink></li>
+                            <li><NavLink class="dropdown-item" href="/history">Order History</NavLink></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><NavLink class="dropdown-item" href="/logout">Logout</NavLink></li>
+                        }
+                        else
+                        {
+                            <li><NavLink class="dropdown-item" href="/login">Login</NavLink></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><NavLink class="dropdown-item" href="/signin">Sign in</NavLink></li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
+</nav>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
+@code
+{
+    private bool isLogged = false;
 }
