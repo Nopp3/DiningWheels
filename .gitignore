@@ -1,4 +1,5 @@
 DiningWheels/.idea/
 DiningWheels/.vs/
-DiningWheels/*/obj/
-DiningWheels/*/bin/
+obj/
+bin/
+Migrations/

@@ -1,19 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.12" />
-  </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.12" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Client\DiningWheels.Client.csproj" />
-    <ProjectReference Include="..\Shared\DiningWheels.Shared.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Client\DiningWheels.Client.csproj" />
+      <ProjectReference Include="..\Shared\DiningWheels.Shared.csproj" />
+      <ProjectReference Include="..\DiningWheels.Application\DiningWheels.Application.csproj" />
+      <ProjectReference Include="..\DiningWheels.Persistance\DiningWheels.Persistance.csproj" />
+    </ItemGroup>
 
 
 </Project>
