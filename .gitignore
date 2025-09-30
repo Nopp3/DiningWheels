@@ -3,3 +3,4 @@ DiningWheels/.vs/
 obj/
 bin/
 Migrations/
+*.DotSettings.user

@@ -18,9 +18,4 @@
       <ProjectReference Include="..\DiningWheels.Domain\DiningWheels.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Restaurant\Commands\" />
-      <Folder Include="Restaurant\Queries\" />
-    </ItemGroup>
-
 </Project>
