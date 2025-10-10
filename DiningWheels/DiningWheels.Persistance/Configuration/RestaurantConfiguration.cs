@@ -15,15 +15,10 @@ public class RestaurantConfiguration : IEntityTypeConfiguration<Restaurant>
             location.Property(x => x.Address)
                 .IsRequired()
                 .HasMaxLength(500);
-            location.Property(x => x.Latitude)
-                .IsRequired()
-                .HasMaxLength(500);
-            location.Property(x => x.Longitude)
-                .IsRequired()
-                .HasMaxLength(500);
+            location.Property(x => x.Latitude) 
+                .IsRequired();
+            location.Property(x => x.Longitude) 
+                .IsRequired();
         });
-
-        builder.Property(x => x.PasswordHash)
-            .IsRequired();
     }
 }

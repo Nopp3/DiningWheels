@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DiningWheels.Persistance.Configuration;
 
-public class EntityConfiguration : IEntityTypeConfiguration<ContactMessage>
+public class ContactMessageConfiguration : IEntityTypeConfiguration<ContactMessage>
 {
     public void Configure(EntityTypeBuilder<ContactMessage> builder)
     {

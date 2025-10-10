@@ -15,20 +15,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(100);
 
         builder.Property(x => x.LastName)
-            .IsRequired()
             .HasMaxLength(100);
         
         builder.OwnsOne(x => x.Location, location =>
         {
             location.Property(x => x.Address)
-                .IsRequired()
                 .HasMaxLength(500);
-            location.Property(x => x.Latitude)
-                .IsRequired()
-                .HasMaxLength(500);
-            location.Property(x => x.Longitude)
-                .IsRequired()
-                .HasMaxLength(500);
+            location.Property(x => x.Latitude).IsRequired(false);
+            location.Property(x => x.Longitude).IsRequired(false);
         });
 
         builder.Property(x => x.Email)
@@ -40,6 +34,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.PasswordHash)
             .IsRequired();
+        
+        builder.HasMany(x => x.Restaurants)
+            .WithOne(x => x.Owner)
+            .HasForeignKey(x => x.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
 
     }
 }

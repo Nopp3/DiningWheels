@@ -7,5 +7,5 @@ public record CreateRestaurantCommand(
     string Address,
     double Latitude,
     double Longitude,
-    string Password
+    string OwnerEmail
 ) : IRequest<Guid>;

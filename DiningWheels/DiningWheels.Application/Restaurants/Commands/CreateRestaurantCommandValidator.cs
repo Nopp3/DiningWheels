@@ -8,6 +8,7 @@ public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaura
     {
         RuleFor(r => r.Name).NotEmpty().WithMessage("Name is required");
         RuleFor(r => r.Address).NotEmpty().WithMessage("Address is required");
-        RuleFor(r => r.Password).MinimumLength(6).WithMessage("Password must be at least 6 characters");
+        RuleFor(r => r.OwnerEmail).NotEmpty().WithMessage("Owner's Email is required")
+            .EmailAddress().WithMessage("Invalid Email Address");
     }
 }

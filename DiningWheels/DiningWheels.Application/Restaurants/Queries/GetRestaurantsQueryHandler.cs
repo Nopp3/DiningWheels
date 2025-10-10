@@ -16,11 +16,12 @@ public class GetRestaurantsQueryHandler : IRequestHandler<GetRestaurantsQuery, L
 
     public async Task<List<RestaurantDto>> Handle(GetRestaurantsQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Restaurants.Select(x => new RestaurantDto
-        {
-            Id = x.Id,
-            Name = x.Name,
-            Address = x.Location.Address
-        }).ToListAsync(cancellationToken);
+        return await _context.Restaurants.Where(x => x.IsActive)
+            .Select(x => new RestaurantDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Address = x.Location.Address
+            }).ToListAsync(cancellationToken);
     }
 }

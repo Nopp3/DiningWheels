@@ -9,12 +9,12 @@ public class Order : BaseEntity
     public virtual Restaurant Restaurant { get; set; }
     
     public Guid? UserId { get; set; }
-    public virtual User User { get; set; }
+    public virtual User? User { get; set; }
     
     public string CustomerFirstName { get; set; }
     public string CustomerLastName  { get; set; }
     public string CustomerPhone     { get; set; }
-    public Location CustomerLocation { get; set; }
+    public Location DeliveryLocation { get; set; }
     
     public OrderStatus Status { get; set; }
     

@@ -22,17 +22,15 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.OwnsOne(x => x.CustomerLocation, location =>
+        builder.OwnsOne(x => x.DeliveryLocation, location =>
         {
             location.Property(x => x.Address)
                 .IsRequired()
                 .HasMaxLength(500);
             location.Property(x => x.Latitude)
-                .IsRequired()
-                .HasMaxLength(500);
+                .IsRequired();
             location.Property(x => x.Longitude)
-                .IsRequired()
-                .HasMaxLength(500);
+                .IsRequired();
         });
             
         
