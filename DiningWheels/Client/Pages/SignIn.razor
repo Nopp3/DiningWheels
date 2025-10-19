@@ -1,0 +1,67 @@
+@page "/signin"
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient Http
+
+<h3>Sign in</h3>
+
+<EditForm Model="@model" OnValidSubmit="@RegisterAsync">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <InputText type="email" id="email" @bind-Value="model.Email" class="form-control"/>
+    </div>
+    
+    <div class="mb-3">
+        <label for="fullName" class="form-label">Full Name</label>
+        <InputText id="fullName" @bind-Value="model.FullName" class="form-control"/>
+    </div>
+    
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <InputText type="password" id="password" @bind-Value="model.Password" class="form-control"/>
+    </div>
+    
+    <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <InputText type="password" id="confirmPassword" @bind-Value="model.ConfirmPassword" class="form-control"/>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Sign in</button>
+</EditForm>
+
+@if (message != null)
+{
+    <p>@message</p>
+}
+
+@code {
+    private CreateUserModel model = new();
+    private string? message;
+
+    private async Task RegisterAsync()
+    {
+        var response = await Http.PostAsJsonAsync("api/users", model);
+
+        message = response.IsSuccessStatusCode ? "Registration successful" : "Registration failed";
+    }
+
+    public class CreateUserModel
+    {
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email")]
+        public string Email { get; set; } = string.Empty;
+        
+        [Required(ErrorMessage = "Name is required")]
+        public string FullName { get; set; } = string.Empty;
+        
+        [Required(ErrorMessage = "Password is required")]
+        [MinLength(8, ErrorMessage = "Password must be at least 8 characters long")]
+        public string Password { get; set; } = string.Empty;
+        
+        [Required(ErrorMessage = "Confirm your password")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
+        public string ConfirmPassword { get; set; } = string.Empty;
+    }
+}
