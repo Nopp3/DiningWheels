@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using DiningWheels.Application;
 using DiningWheels.Persistance;
+using DiningWheels.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.Services.AddPersistance(builder.Configuration).AddApplication();
+builder.Services.AddPersistance(builder.Configuration)
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

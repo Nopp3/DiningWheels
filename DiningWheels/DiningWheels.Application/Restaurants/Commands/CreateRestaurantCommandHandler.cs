@@ -11,10 +11,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 public class CreateRestaurantCommandHandler : IRequestHandler<CreateRestaurantCommand, Guid>
 {
     private readonly IDiningWheelsDbContext _context;
+    private readonly IEmailService _emailService;
 
-    public CreateRestaurantCommandHandler(IDiningWheelsDbContext context)
+    public CreateRestaurantCommandHandler(IDiningWheelsDbContext context, IEmailService emailService)
     {
         _context = context;
+        _emailService = emailService;
     }
 
     public async Task<Guid> Handle(CreateRestaurantCommand request, CancellationToken cancellationToken)
@@ -55,6 +57,12 @@ public class CreateRestaurantCommandHandler : IRequestHandler<CreateRestaurantCo
             _context.Restaurants.Add(restaurant);
             await _context.SaveChangesAsync(cancellationToken);
         }
+
+        await _emailService.SendEmailAsync(
+            owner.Email,
+            "Your restaurant has been registered",
+            $"Link: https://localhost:7093/restaurant/{restaurant.Id}",
+            cancellationToken);
         
         return restaurant.Id;
     }
