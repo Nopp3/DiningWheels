@@ -19,14 +19,10 @@ public class ValidationBehaviour<TRequest, TResponse>
         {
             var context = new ValidationContext<TRequest>(request);
 
-            var failures = _validators
-                .Select(v => v.Validate(context))
-                .SelectMany(result => result.Errors);
-
-            if (failures.Any())
-            {
-                throw new ValidationException(failures);
-            }
+            var failures = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+            var errors = failures.SelectMany(f => f.Errors).Where(f => f != null).ToList();
+            if (errors.Any())
+                throw new ValidationException(errors);
         }
         return await next();
     }
