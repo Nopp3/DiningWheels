@@ -1,4 +1,5 @@
 using DiningWheels.Application.Common.Interfaces;
+using DiningWheels.Infrastructure.Configuration;
 using DiningWheels.Infrastructure.Email;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,13 +10,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddTransient<IEmailService>(_ => new SmtpEmailService(
-            configuration["Smtp:Host"]!,
-            int.Parse(configuration["Smtp:Port"]!),
-            configuration["Smtp:Username"]!,
-            configuration["Smtp:Password"]!,
-            configuration["Smtp:From"]!
-        ));
+        services.Configure<SmtpOptions>(configuration.GetSection("Smtp"));
+        services.AddTransient<IEmailService, SmtpEmailService>();
         return services;
     }
 }
