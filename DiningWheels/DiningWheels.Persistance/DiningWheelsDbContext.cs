@@ -23,6 +23,14 @@ public class DiningWheelsDbContext : DbContext, IDiningWheelsDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.Entity<User>().HasQueryFilter(u => u.IsActive);
+        modelBuilder.Entity<Restaurant>().HasQueryFilter(r => r.IsActive);
+        modelBuilder.Entity<MenuItem>().HasQueryFilter(m => m.IsActive);        
+        modelBuilder.Entity<Order>().HasQueryFilter(o => o.IsActive);
+        modelBuilder.Entity<ContactMessage>().HasQueryFilter(c => c.IsActive);
+        modelBuilder.Entity<OpeningHours>().HasQueryFilter(o => o.IsActive);
+        modelBuilder.Entity<OrderItem>().HasQueryFilter(oi => oi.IsActive);    
+        base.OnModelCreating(modelBuilder);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -31,9 +39,6 @@ public class DiningWheelsDbContext : DbContext, IDiningWheelsDbContext
         {
             switch (entry.State)
             {
-                case EntityState.Added:
-                    entry.Entity.Id = Guid.NewGuid();
-                    break;
                 case EntityState.Modified:
                     entry.Entity.UpdatedAt = DateTime.UtcNow;
                     break;
